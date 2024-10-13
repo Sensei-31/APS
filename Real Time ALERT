@@ -1,0 +1,17 @@
+from fastapi import FastAPI
+import pandas as pd
+
+app = FastAPI()
+
+# Endpoint to check for collision path
+@app.post("/collision-detection/")
+def check_collision(vehicle1: dict, vehicle2: dict):
+    # Convert input to pandas Series
+    vehicle1_data = pd.Series(vehicle1)
+    vehicle2_data = pd.Series(vehicle2)
+    
+    # Check for collision path
+    collision = is_collision_path(vehicle1_data, vehicle2_data)
+    return {"collision_possible": collision}
+
+# Run the FastAPI app (use `uvicorn filename:app --reload` to run the server)
